@@ -34,10 +34,26 @@ const initialState = {
 export const DataContext = createContext()
 
 export const DataProvider = (props) => {
+
     const [store, setStore] = useState(initialState)
+
+    const changeTitle = (id, text) => {
+        const item = store.lists[id]
+        item.title = text
+        
+        const newStore = {
+            ...store,
+            lists: {
+                ...store.lists,
+                [id]: item
+            }
+        }
+        setStore(newStore)
+    }
+
     return (
         // {{store}} because it's going to be exported in object
-        <DataContext.Provider value={{ store }}>
+        <DataContext.Provider value={{ store, changeTitle }}>
             {props.children}
         </DataContext.Provider>
     )

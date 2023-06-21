@@ -1,15 +1,16 @@
 import React from 'react'
 import '../sass/Board.scss'
+import BoardTitle from './BoardTitle'
 
 const Board = ({ data }) => {
-    return(
+    return (
         <div className='board'>
-            <h3>{data.title}</h3>
+            <BoardTitle id={data.id} title={data.title} />
             <div>
                 card
             </div>
             <button>add</button>
-        </div> 
+        </div>
     )
 }
 
