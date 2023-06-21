@@ -1,19 +1,20 @@
 import React from 'react'
-import { Droppable } from '@hello-pangea/dnd'
+import { Droppable, Draggable } from '@hello-pangea/dnd'
 import BoardTitle from './BoardTitle'
 import Card from './Card'
 import Button from './Button'
 import '../sass/Board.scss'
 import menu from '../assets/menu.svg'
 
-const Board = ({ data }) => {
+const Board = ({ data, index }) => {
     return (
-        <Droppable droppableId={data.id}>
+        <Draggable draggableId={data.id} index={index}>
             {(provided) => (
                 <div
                     ref={provided.innerRef}
-                    {...provided.droppableProps}
-                    className='board'
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    className="board"
                 >
                     <div className="board__title">
                         <BoardTitle id={data.id} title={data.title} />
@@ -21,16 +22,23 @@ const Board = ({ data }) => {
                             <img src={menu} alt="menu" />
                         </div>
                     </div>
-                    <div>
-                        {data.cards.map((card, index) =>
-                            <Card key={card.id} id={data.id} index={index} item={card} />
+                    <Droppable droppableId={data.id}>
+                        {(provided) => (
+                            <div
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                            >
+                                {data.cards.map((card, index) =>
+                                    <Card key={card.id} id={data.id} index={index} item={card} />
+                                )}
+                                {provided.placeholder}
+                            </div>
                         )}
-                        {provided.placeholder}
-                        <Button id={data.id} />
-                    </div>
+                    </Droppable>
+                    <Button id={data.id} />
                 </div>
             )}
-        </Droppable>
+        </Draggable>
     )
 }
 

@@ -3,16 +3,28 @@ import Header from './components/Header'
 import Board from './components/Board'
 import Button from './components/Button'
 import { DataContext } from './context/store'
-import { DragDropContext } from '@hello-pangea/dnd'
+import { DragDropContext, Droppable } from '@hello-pangea/dnd'
 import './App.scss'
 
 const App = () => {
   const { store, updateDrag } = useContext(DataContext)
 
   const onDragEnd = result => {
-    const { destination, source, draggableId } = result
+    const { destination, source, draggableId, type } = result
 
     if (!destination) return
+
+    if (type == 'list') {
+      const lists = store.listIds
+      lists.splice(source.index, 1)
+      lists.splice(destination.index, 0, draggableId)
+      const newStore = {
+        ...store,
+        listIds: lists
+      }
+      updateDrag(newStore)
+      return
+    }
 
     const sourceList = store.lists[source.droppableId]
 
@@ -47,16 +59,24 @@ const App = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div>
-        <Header />
-        <div className="container">
-          {store.listIds.map(id => {
-            const data = store.lists[id]
-            return <Board key={id} data={data} />
-          })}
-          <Button list />
-        </div>
-      </div>
+      <Droppable droppableId='app' type='list' direction='horizontal'>
+        {(provided) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <Header />
+            <div className="container">
+              {store.listIds.map((id, index) => {
+                const data = store.lists[id]
+                return <Board key={id} data={data} index={index} />
+              })}
+              <Button list />
+            </div>
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </DragDropContext>
   )
 }
