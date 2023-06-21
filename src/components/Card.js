@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import { Draggable } from '@hello-pangea/dnd'
 import { DataContext } from '../context/store'
 import '../sass/Card.scss'
 import delIcon from '../assets/delete.svg'
@@ -26,24 +27,33 @@ const Card = ({ id, item, index }) => {
     }
 
     return (
-        <div className="card-list">
-            {edit ? (
-                <form onSubmit={closeInput}>
-                    <input
-                        autoFocus
-                        onBlur={closeInput}
-                        type="text"
-                        value={text}
-                        onChange={handleChange}
-                    />
-                </form>
-            ) : (
-                <div className="card-list__text">
-                    <p onClick={isEdit}>{item.title}</p>
-                    <img src={delIcon} alt="delete" onClick={deleteCard}/>
+        <Draggable draggableId={item.id} index={index}>
+            {(provided) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    className="card-list"
+                >
+                    {edit ? (
+                        <form onSubmit={closeInput}>
+                            <input
+                                autoFocus
+                                onBlur={closeInput}
+                                type="text"
+                                value={text}
+                                onChange={handleChange}
+                            />
+                        </form>
+                    ) : (
+                        <div className="card-list__text">
+                            <p onClick={isEdit}>{item.title}</p>
+                            <img src={delIcon} alt="delete" onClick={deleteCard} />
+                        </div>
+                    )}
                 </div>
             )}
-        </div>
+        </Draggable>
     )
 }
 
