@@ -1,14 +1,20 @@
 import React, { useContext } from 'react'
-import Header from './components/Header';
-import { DataContext } from './context/store';
+import Header from './components/Header'
+import Board from './components/Board'
+import { DataContext } from './context/store'
+import './App.scss'
 
 const App = () => {
-  const val = useContext(DataContext)
+  const { store } = useContext(DataContext)
   return (
     <div>
-      {val}
       <Header />
-      Hello World
+      <div className="container">
+        {store.listIds.map(id => {
+          const data = store.lists[id]
+          return <Board key={id} data={data}/>
+        })}
+      </div>
     </div>
   )
 }

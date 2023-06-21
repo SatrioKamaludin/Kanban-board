@@ -28,15 +28,16 @@ const initialState = {
             cards: []
         }
     },
-    listIds: []
+    listIds: ['list-1', 'list-2']
 }
 
 export const DataContext = createContext()
 
 export const DataProvider = (props) => {
     const [store, setStore] = useState(initialState)
-    return(
-        <DataContext.Provider value='ok'>
+    return (
+        // {{store}} because it's going to be exported in object
+        <DataContext.Provider value={{ store }}>
             {props.children}
         </DataContext.Provider>
     )
