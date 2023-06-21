@@ -1,7 +1,9 @@
 import React from 'react'
 import BoardTitle from './BoardTitle'
+import Card from './Card'
 import '../sass/Board.scss'
 import menu from '../assets/menu.svg'
+
 
 const Board = ({ data }) => {
     return (
@@ -13,7 +15,9 @@ const Board = ({ data }) => {
                 </div>
             </div>
             <div>
-                card
+                {data.cards.map((card) => 
+                    <Card key={card.id} item={card} />
+                )}
             </div>
             <button>add</button>
         </div>
