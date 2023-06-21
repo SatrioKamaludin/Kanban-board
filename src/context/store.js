@@ -65,9 +65,24 @@ export const DataProvider = (props) => {
         setStore(newStore)
     }
 
+    const cardEdit = (listId, cardId, idx, text) => {
+        const item = store.lists[listId]
+        const card = item.cards.find(item => item.id === cardId)
+        card.title = text
+        item.cards.splice(idx, 1, card)
+        const newStore = {
+            ...store,
+            lists: {
+                ...store.lists,
+                [listId]: item
+            }
+        }
+        setStore(newStore)
+    }
+
     return (
         // {{store}} because it's going to be exported in object
-        <DataContext.Provider value={{ store, changeTitle, cardDelete }}>
+        <DataContext.Provider value={{ store, changeTitle, cardDelete, cardEdit }}>
             {props.children}
         </DataContext.Provider>
     )

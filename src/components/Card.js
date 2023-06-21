@@ -3,8 +3,8 @@ import { DataContext } from '../context/store'
 import '../sass/Card.scss'
 import delIcon from '../assets/delete.svg'
 
-const Card = ({ id, item }) => {
-    const { cardDelete } = useContext(DataContext)
+const Card = ({ id, item, index }) => {
+    const { cardDelete, cardEdit } = useContext(DataContext)
 
     const [edit, setEdit] = useState(false)
 
@@ -12,7 +12,14 @@ const Card = ({ id, item }) => {
 
     const isEdit = () => setEdit(true)
 
-    const closeInput = () => setEdit(false)
+    const handleChange = e => {
+        setText(e.target.value)
+    }
+
+    const closeInput = () => {
+        cardEdit(id, item.id, index, text)
+        setEdit(false)
+    }
 
     const deleteCard = () => {
         cardDelete(id, item.id)
@@ -27,6 +34,7 @@ const Card = ({ id, item }) => {
                         onBlur={closeInput}
                         type="text"
                         value={text}
+                        onChange={handleChange}
                     />
                 </form>
             ) : (
