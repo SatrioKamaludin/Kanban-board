@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { DataContext } from '../context/store'
 import '../sass/Card.scss'
 import delIcon from '../assets/delete.svg'
 
-const Card = ({ item }) => {
+const Card = ({ id, item }) => {
+    const { cardDelete } = useContext(DataContext)
+
     const [edit, setEdit] = useState(false)
 
     const [text, setText] = useState(item.title)
@@ -10,6 +13,10 @@ const Card = ({ item }) => {
     const isEdit = () => setEdit(true)
 
     const closeInput = () => setEdit(false)
+
+    const deleteCard = () => {
+        cardDelete(id, item.id)
+    }
 
     return (
         <div className="card-list">
@@ -25,7 +32,7 @@ const Card = ({ item }) => {
             ) : (
                 <div className="card-list__text">
                     <p onClick={isEdit}>{item.title}</p>
-                    <img src={delIcon} alt="delete" />
+                    <img src={delIcon} alt="delete" onClick={deleteCard}/>
                 </div>
             )}
         </div>

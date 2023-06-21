@@ -16,7 +16,7 @@ const Board = ({ data }) => {
             </div>
             <div>
                 {data.cards.map((card) => 
-                    <Card key={card.id} item={card} />
+                    <Card key={card.id} id={data.id} item={card} />
                 )}
             </div>
             <button>add</button>
