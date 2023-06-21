@@ -99,9 +99,26 @@ export const DataProvider = (props) => {
         setStore(newStore)
     }
 
+    const listAdd = (text) => {
+        const id = `list-${uuid()}`
+        const newList = {
+            id,
+            title: text,
+            cards: []
+        }
+        const newStore = {
+            listIds: [...store.listIds, id],
+            lists: {
+                ...store.lists,
+                [id]: newList
+            }
+        }
+        setStore(newStore)
+    }
+
     return (
         // {{store}} because it's going to be exported in object
-        <DataContext.Provider value={{ store, changeTitle, cardDelete, cardEdit, cardAdd }}>
+        <DataContext.Provider value={{ store, changeTitle, cardDelete, cardEdit, cardAdd, listAdd }}>
             {props.children}
         </DataContext.Provider>
     )

@@ -5,7 +5,7 @@ import '../sass/Button.scss'
 import close from '../assets/close.svg'
 
 const Button = ({ id, list }) => {
-    const { cardAdd } = useContext(DataContext)
+    const { cardAdd, listAdd } = useContext(DataContext)
 
     const [open, setOpen] = useState(false)
 
@@ -24,6 +24,13 @@ const Button = ({ id, list }) => {
         setText('')
     }
 
+    const addList = () => {
+        if (text) {
+            listAdd(text)
+        }
+        setText('')
+    }
+
     const showForm = () => {
         const textButton = list ? 'add list' : 'add card'
         const placeholder = list ? 'enter list title' : 'enter card title'
@@ -37,7 +44,7 @@ const Button = ({ id, list }) => {
                     value={text}
                     onChange={handleChange}
                 />
-                <button className='add' onMouseDown={addCard}>{textButton}</button>
+                <button className='add' onMouseDown={list ? addList : addCard}>{textButton}</button>
                 <button className='close'>
                     <img src={close} alt="close" onClick={closeForm} />
                 </button>
