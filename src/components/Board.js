@@ -1,11 +1,17 @@
 import React from 'react'
-import '../sass/Board.scss'
 import BoardTitle from './BoardTitle'
+import '../sass/Board.scss'
+import menu from '../assets/menu.svg'
 
 const Board = ({ data }) => {
     return (
         <div className='board'>
-            <BoardTitle id={data.id} title={data.title} />
+            <div className="board__title">
+                <BoardTitle id={data.id} title={data.title} />
+                <div className="menu">
+                    <img src={menu} alt="menu" />
+                </div>
+            </div>
             <div>
                 card
             </div>
