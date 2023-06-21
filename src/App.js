@@ -10,12 +10,17 @@ const App = () => {
   const { store, updateDrag } = useContext(DataContext)
 
   const onDragEnd = result => {
-    const { destination,source, draggableId } = result
-    if(!destination) return 
+    const { destination, source, draggableId } = result
+
+    if (!destination) return
+
     const sourceList = store.lists[source.droppableId]
+
     const destinationList = store.lists[destination.droppableId]
+
     const draggingCard = sourceList.cards.find(item => item.id === draggableId)
-    if(sourceList === destinationList){
+
+    if (sourceList === destinationList) {
       sourceList.cards.splice(source.index, 1)
       destinationList.cards.splice(destination.index, 0, draggingCard)
       const newStore = {
@@ -26,8 +31,20 @@ const App = () => {
         }
       }
       updateDrag(newStore)
+    } else {
+      sourceList.cards.splice(source.index, 1)
+      destinationList.cards.splice(destination.index, 0, draggingCard)
+      const newStore = {
+        ...store,
+        lists: {
+          ...store.lists,
+          [sourceList.id]: sourceList,
+          [destinationList.id]: destinationList
+        }
+      }
     }
   }
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
