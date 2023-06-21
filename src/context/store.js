@@ -116,9 +116,13 @@ export const DataProvider = (props) => {
         setStore(newStore)
     }
 
+    const updateDrag = data => {
+        setStore(data)
+    }
+
     return (
         // {{store}} because it's going to be exported in object
-        <DataContext.Provider value={{ store, changeTitle, cardDelete, cardEdit, cardAdd, listAdd }}>
+        <DataContext.Provider value={{ store, changeTitle, cardDelete, cardEdit, cardAdd, listAdd, updateDrag }}>
             {props.children}
         </DataContext.Provider>
     )

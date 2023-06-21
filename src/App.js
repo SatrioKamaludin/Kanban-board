@@ -7,9 +7,29 @@ import { DragDropContext } from '@hello-pangea/dnd'
 import './App.scss'
 
 const App = () => {
-  const { store } = useContext(DataContext)
+  const { store, updateDrag } = useContext(DataContext)
+
+  const onDragEnd = result => {
+    const { destination,source, draggableId } = result
+    if(!destination) return 
+    const sourceList = store.lists[source.droppableId]
+    const destinationList = store.lists[destination.droppableId]
+    const draggingCard = sourceList.cards.find(item => item.id === draggableId)
+    if(sourceList === destinationList){
+      sourceList.cards.splice(source.index, 1)
+      destinationList.cards.splice(destination.index, 0, draggingCard)
+      const newStore = {
+        ...store,
+        lists: {
+          ...store.lists,
+          [sourceList.id]: destinationList
+        }
+      }
+      updateDrag(newStore)
+    }
+  }
   return (
-    <DragDropContext>
+    <DragDropContext onDragEnd={onDragEnd}>
       <div>
         <Header />
         <div className="container">
