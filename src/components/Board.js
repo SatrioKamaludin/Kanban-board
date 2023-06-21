@@ -1,9 +1,9 @@
 import React from 'react'
 import BoardTitle from './BoardTitle'
 import Card from './Card'
+import Button from './Button'
 import '../sass/Board.scss'
 import menu from '../assets/menu.svg'
-
 
 const Board = ({ data }) => {
     return (
@@ -15,11 +15,11 @@ const Board = ({ data }) => {
                 </div>
             </div>
             <div>
-                {data.cards.map((card, index) => 
+                {data.cards.map((card, index) =>
                     <Card key={card.id} id={data.id} index={index} item={card} />
                 )}
+                <Button />
             </div>
-            <button>add</button>
         </div>
     )
 }
