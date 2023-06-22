@@ -10,11 +10,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        .menu{
+        .delIcon{
             width: 50%;
             text-align: right;
             img{
                 width: 1rem;
+                cursor: pointer;
             }
         }
     }

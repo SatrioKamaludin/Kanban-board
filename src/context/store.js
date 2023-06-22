@@ -116,13 +116,24 @@ export const DataProvider = (props) => {
         setStore(newStore)
     }
 
+    const listDelete = (listId) => {
+        const updatedListIds = store.listIds.filter((id) => id !== listId);
+        const updatedLists = { ...store.lists };
+        delete updatedLists[listId];
+        const newStore = {
+            listIds: updatedListIds,
+            lists: updatedLists
+        };
+        setStore(newStore);
+    };
+
     const updateDrag = data => {
         setStore(data)
     }
 
     return (
         // {{store}} because it's going to be exported in object
-        <DataContext.Provider value={{ store, changeTitle, cardDelete, cardEdit, cardAdd, listAdd, updateDrag }}>
+        <DataContext.Provider value={{ store, changeTitle, cardDelete, cardEdit, cardAdd, listAdd, listDelete, updateDrag }}>
             {props.children}
         </DataContext.Provider>
     )
