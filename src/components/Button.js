@@ -1,11 +1,12 @@
-import React, { useState, useContext } from 'react'
-import { DataContext } from '../context/store'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { cardAdd, listAdd } from '../store/actions/boardActions'
 import Textarea from 'react-textarea-autosize'
 import '../sass/Button.scss'
 import close from '../assets/close.svg'
 
 const Button = ({ id, list }) => {
-    const { cardAdd, listAdd } = useContext(DataContext)
+    const dispatch = useDispatch()
 
     const [open, setOpen] = useState(false)
 
@@ -19,14 +20,14 @@ const Button = ({ id, list }) => {
 
     const addCard = () => {
         if (text) {
-            cardAdd(id, text)
+            dispatch(cardAdd(id, text))
         }
         setText('')
     }
 
     const addList = () => {
         if (text) {
-            listAdd(text)
+            dispatch(listAdd(text))
         }
         setText('')
     }

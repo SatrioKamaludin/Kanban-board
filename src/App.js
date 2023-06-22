@@ -1,13 +1,17 @@
-import React, { useContext } from 'react'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateDrag } from './store/actions/boardActions'
 import Header from './components/Header'
 import Board from './components/Board'
 import Button from './components/Button'
-import { DataContext } from './context/store'
 import { DragDropContext, Droppable } from '@hello-pangea/dnd'
 import './App.scss'
 
+
 const App = () => {
-  const { store, updateDrag } = useContext(DataContext)
+  const store = useSelector((state) => state.board)
+
+  const dispatch = useDispatch()
 
   const onDragEnd = result => {
     const { destination, source, draggableId, type } = result
@@ -22,7 +26,7 @@ const App = () => {
         ...store,
         listIds: lists
       }
-      updateDrag(newStore)
+      dispatch(updateDrag(newStore))
       return
     }
 
@@ -42,7 +46,7 @@ const App = () => {
           [sourceList.id]: destinationList
         }
       }
-      updateDrag(newStore)
+      dispatch(updateDrag(newStore))
     } else {
       sourceList.cards.splice(source.index, 1)
       destinationList.cards.splice(destination.index, 0, draggingCard)
@@ -54,6 +58,7 @@ const App = () => {
           [destinationList.id]: destinationList
         }
       }
+      dispatch(updateDrag(newStore))
     }
   }
 

@@ -1,11 +1,12 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { cardDelete, cardEdit } from '../store/actions/boardActions'
 import { Draggable } from '@hello-pangea/dnd'
-import { DataContext } from '../context/store'
 import '../sass/Card.scss'
 import delIcon from '../assets/delete.svg'
 
 const Card = ({ id, item, index }) => {
-    const { cardDelete, cardEdit } = useContext(DataContext)
+    const dispatch = useDispatch()
 
     const [edit, setEdit] = useState(false)
 
@@ -18,12 +19,12 @@ const Card = ({ id, item, index }) => {
     }
 
     const closeInput = () => {
-        cardEdit(id, item.id, index, text)
+        dispatch(cardEdit(id, item.id, index, text))
         setEdit(false)
     }
 
     const deleteCard = () => {
-        cardDelete(id, item.id)
+        dispatch(cardDelete(id, item.id))
     }
 
     return (

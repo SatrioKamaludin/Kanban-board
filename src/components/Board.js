@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
-import { DataContext } from '../context/store'
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { listDelete } from '../store/actions/boardActions'
 import { Droppable, Draggable } from '@hello-pangea/dnd'
 import BoardTitle from './BoardTitle'
 import Card from './Card'
@@ -8,11 +9,11 @@ import '../sass/Board.scss'
 import delIcon from '../assets/close.svg'
 
 const Board = ({ data, index }) => {
-    const { listDelete } = useContext(DataContext);
+    const dispatch = useDispatch()
 
     const handleDelete = () => {
-        listDelete(data.id);
-    };
+        dispatch(listDelete(data.id))
+    }
 
     return (
         <Draggable draggableId={data.id} index={index}>
@@ -26,7 +27,7 @@ const Board = ({ data, index }) => {
                     <div className="board__title">
                         <BoardTitle id={data.id} title={data.title} />
                         <div className="delIcon">
-                            <img src={delIcon} alt="delIcon" title="remove list" onClick={handleDelete}/>
+                            <img src={delIcon} alt="delIcon" title="remove list" onClick={handleDelete} />
                         </div>
                     </div>
                     <Droppable droppableId={data.id}>

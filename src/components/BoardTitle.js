@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react'
-import { DataContext } from '../context/store'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { changeTitle } from '../store/actions/boardActions'
 import '../sass/BoardTitle.scss'
 
 const BoardTitle = ({ id, title }) => {
-    const { changeTitle } = useContext(DataContext)
+    const dispatch = useDispatch();
 
     const [text, setText] = useState(title)
 
@@ -15,7 +16,7 @@ const BoardTitle = ({ id, title }) => {
 
     const closeInput = () => {
         setOpen(false)
-        changeTitle(id, text)
+        dispatch(changeTitle(id, text))
     }
 
     const handleChange = e => {
